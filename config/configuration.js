@@ -1,32 +1,29 @@
-
-// mongodb+srv://KartikJaiswal:<password>@blog.smyeg.mongodb.net/<dbname>?retryWrites=true&w=majority 
-// l13yFSWpb2YU1qR5
-// KartikJaiswal
-
-
 module.exports = {
-    mongoDbUrl : 'mongodb+srv://KartikJaiswal:l13yFSWpb2YU1qR5@blog.smyeg.mongodb.net/<dbname>?retryWrites=true&w=majority/KartiksBlog',
-    PORT: process.env.PORT || 3000,
-    globalVariables: (req, res, next) => {
-        res.locals.success_message = req.flash('success-message');
-        res.locals.error_message = req.flash('error-message');
-        res.locals.user = req.user || null;
-        next();
+
+    selectOption : function (status, options) {
+
+        return options.fn(this).replace(new RegExp('value=\"'+status+'\"'), '$&selected="selected"');
     },
+
+    isEmpty: function (obj) {
+        for(let key in obj) {
+            if(obj.hasOwnProperty(key)) {
+                return false;
+            }
+        }
+
+        return true;
+    },
+
+    isUserAuthenticated: (req, res, next) => {
+         if (req.isAuthenticated()) {
+             next();
+         }
+         else {
+             res.redirect('/login');
+         }
+    }
+
 
 
 };
-
-
-// module.exports = {
-//     mongoDbUrl : 'mongodb://localhost:27017/KartikBlog',
-//     PORT: process.env.PORT || 3000,
-//     globalVariables: (req, res, next) => {
-//         res.locals.success_message = req.flash('success-message');
-//         res.locals.error_message = req.flash('error-message');
-//         res.locals.user = req.user || null;
-//         next();
-//     },
-
-
-// };
